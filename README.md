@@ -1,6 +1,11 @@
 # Docker Compose Nodejs and MongoDB example
 
 ## Run the System
+
+First do this instruction before you running the program:
+- Copy .env.sample to root folder.
+- Rename .env.sample to .env
+
 We can easily run the whole with only a single command:
 ```bash
 docker-compose up
