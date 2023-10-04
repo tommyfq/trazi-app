@@ -1,0 +1,3 @@
+.env
+trazi-app/node_modules
+trazi-app/package-lock.json

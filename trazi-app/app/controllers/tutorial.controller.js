@@ -1,7 +1,7 @@
 const db = require("../models");
 const Tutorial = db.tutorials;
 
-// Create and Save a new Tutorial
+// Create and Save a new Tutorials
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {

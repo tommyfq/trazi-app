@@ -12,12 +12,22 @@ services:
       - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
     volumes:
       - db:/data/db
+  redis:
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - redis:/data
   app:
     depends_on:
       - mongodb
-    build: ./bezkoder-app
+      - redis
+    build: ./trazi-app
     restart: unless-stopped
     env_file: ./.env
+    command: nodemon server.js localhost 80
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     environment:
@@ -26,8 +36,12 @@ services:
       - DB_PASSWORD=$MONGODB_PASSWORD
       - DB_NAME=$MONGODB_DATABASE
       - DB_PORT=$MONGODB_DOCKER_PORT
+      - REDIS_HOST:$REDIS_HOST
+      - REDIS_PORT:$REDIS_PORT
+      - REDIS_PASSWORD:$REDIS_PASSWORD
     stdin_open: true
     tty: true
 
 volumes:
   db:
+  redis:
